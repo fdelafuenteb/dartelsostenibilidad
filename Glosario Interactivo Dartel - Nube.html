@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sostenibilidad Dartel · Dartel S.A.</title>
+<style>
+  :root {
+    --bg: #f2f1f1;          /* tono de fondo igual al del Logo.jpeg */
+    --card: #ffffff;
+    --card-hover: #faf4f8;
+    --ink: #1f2733;
+    --muted: #6b7684;
+    --line: #e2e6ec;
+    --accent: #7a1b55;      /* vino corporativo (Head.jpeg) */
+    --accent-2: #a83a7e;    /* vino más claro para gradientes */
+    --shadow: 0 8px 24px rgba(31,39,51,.10);
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* Cabecera con imagen Head.jpeg */
+  .site-head {
+    width: 100%;
+    background: #7a1b55 url("https://raw.githubusercontent.com/fdelafuenteb/dartelsostenibilidad/main/Logotipos%20y%20Don%20Electro/Head.jpeg") center/cover no-repeat;
+    height: 90px;
+  }
+
+  header.top {
+    padding: 22px 24px 6px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  }
+  .logo {
+    flex: none; height: 66px; width: auto; display: block;
+  }
+  .logo img { height: 100%; width: auto; display: block; }
+  h1 { font-size: 1.55rem; margin: 0; letter-spacing: .2px; color: var(--accent); }
+  .subtitle { color: var(--muted); margin: 6px 0 0; font-size: .98rem; }
+  .toolbar {
+    max-width: 1180px; margin: 18px auto 0; padding: 0 24px;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .search {
+    flex: 1 1 280px; display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    padding: 10px 14px;
+  }
+  .search input {
+    border: 0; outline: 0; background: transparent; color: var(--ink);
+    width: 100%; font-size: 1rem;
+  }
+  .search input::placeholder { color: var(--muted); }
+  .count-pill {
+    color: var(--muted); font-size: .9rem; background: #faf4f8;
+    border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px;
+  }
+  main { max-width: 1180px; margin: 22px auto 40px; padding: 0 24px; }
+  .grid {
+    display: grid; gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    align-items: start;
+  }
+  /* Contenedor de la tarjeta (encabezado + resultados de búsqueda). */
+  .ministry-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+    transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease;
+  }
+  .ministry-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(122,27,85,.16); }
+
+  /* Encabezado clickeable de la tarjeta. */
+  .ministry {
+    background: transparent; border: 0; border-radius: var(--radius);
+    color: var(--ink); text-align: left; cursor: pointer; width: 100%;
+    display: flex; align-items: center; gap: 14px; padding: 18px;
+  }
+  .ministry:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  /* Resultados de búsqueda bajo el encabezado. */
+  .card-hits {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 0 16px 16px;
+    border-top: 1px dashed var(--line); margin-top: -2px; padding-top: 12px;
+  }
+  .m-icon {
+    width: 46px; height: 46px; border-radius: 12px; flex: none;
+    display: grid; place-items: center; font-size: 1.4rem;
+    background: #faf4f8; border: 1px solid var(--line);
+    transition: border-color .12s ease, box-shadow .12s ease;
+  }
+  .m-icon-link { cursor: pointer; }
+  .ministry-card:hover .m-icon-link { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(122,27,85,.22); }
+  .m-meta { flex: 1 1 auto; min-width: 0; }
+  .m-name { font-weight: 700; font-size: 1.05rem; }
+  .m-sub { color: var(--muted); font-size: .85rem; }
+  .m-badge {
+    font-size: .78rem; color: #fff; background: var(--accent);
+    border-radius: 999px; padding: 3px 10px; font-weight: 700; flex: none;
+  }
+  .m-open-ico { color: var(--accent); flex: none; font-size: 1rem; }
+  .sigla-self { border-style: dashed; }
+  .sigla-list { padding: 4px 2px 2px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .sigla {
+    background: #faf4f8; border: 1px solid var(--line); color: var(--ink);
+    border-radius: 10px; padding: 8px 12px; cursor: pointer; font-weight: 600;
+    font-size: .92rem; transition: background .12s ease, border-color .12s ease, transform .08s ease;
+  }
+  .sigla:hover { background: #f1e2ec; border-color: var(--accent); }
+  .sigla:active { transform: scale(.97); }
+  .sigla .s-full { display:block; color: var(--muted); font-weight: 400; font-size: .74rem; margin-top: 2px; }
+
+  /* Modal */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(31,39,51,.6);
+    display: none; align-items: center; justify-content: center; padding: 20px; z-index: 50;
+    /* Nota: se quitó backdrop-filter: blur() porque hacía lento abrir/operar el modal en Chrome. */
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    position: relative;
+    width: min(560px, 100%); background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: 0 20px 50px rgba(31,39,51,.25); overflow: visible;
+    animation: pop .18s ease;
+  }
+  @keyframes pop { from { transform: translateY(8px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal-head {
+    display: flex; align-items: flex-start; gap: 12px; padding: 20px 20px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-tag {
+    font-size: 1.4rem; font-weight: 800; color: #fff; flex: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    padding: 6px 12px; border-radius: 12px;
+  }
+  .modal-title { flex: 1 1 auto; }
+  .modal-title .full { font-size: 1.08rem; font-weight: 700; }
+  .modal-title .org { color: var(--muted); font-size: .86rem; margin-top: 2px; }
+  .close-btn {
+    flex: none; background: #faf4f8; color: var(--ink); border: 1px solid var(--line);
+    width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-size: 1.1rem; line-height: 1;
+  }
+  .close-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .modal-body { padding: 16px 20px 6px; }
+  .field-label {
+    text-transform: uppercase; letter-spacing: .08em; font-size: .72rem;
+    color: var(--accent); font-weight: 700; margin: 10px 0 4px;
+  }
+  .modal-body p { margin: 0 0 8px; color: var(--ink); }
+  .modal-foot {
+    padding: 12px 20px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .source a { color: var(--accent); font-size: .85rem; word-break: break-all; }
+  .source span { color: var(--muted); font-size: .8rem; }
+  .btn-close-foot {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff;
+    border: 0; padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer;
+  }
+  /* Modal de lista de siglas por organismo */
+  .modal.wide { width: min(560px, 100%); transition: width .28s ease; }
+  /* Cuando hay una sigla seleccionada, el modal se ensancha para el panel lateral. */
+  .modal.wide.detail-open { width: min(920px, 100%); }
+
+  .split { display: flex; align-items: stretch; }
+  .split-list {
+    flex: 1 1 auto; min-width: 0;
+    padding: 14px 20px 6px; max-height: 60vh; overflow-y: auto;
+  }
+  .list-intro { color: var(--muted); font-size: .9rem; margin: 0 0 12px; }
+  .self-row {
+    display: flex; align-items: center; gap: 10px; margin: 0 0 14px;
+    padding: 12px 14px; background: #faf4f8; border: 1px dashed var(--accent); border-radius: 12px;
+    cursor: pointer; color: var(--ink); width: 100%; text-align: left;
+  }
+  .self-row:hover { border-color: var(--accent-2); background: #f1e2ec; }
+  .self-row.active { background: #f1e2ec; box-shadow: 0 0 0 2px rgba(122,27,85,.3); }
+  .self-row .sr-tag { font-weight: 800; }
+  .self-row .sr-full { color: var(--muted); font-size: .82rem; }
+  .sigla.active { background: #f1e2ec; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(122,27,85,.3); }
+
+  /* Divisor vertical: no llega a los extremos, pero es suficientemente largo. */
+  .split-divider {
+    flex: none; width: 0; align-self: stretch;
+    margin: 22px 0; border-left: 1px solid var(--line);
+    display: none;
+  }
+  .modal.wide.detail-open .split-divider { display: block; }
+
+  /* Panel de detalle lateral (derecha) */
+  .split-detail {
+    flex: 0 0 42%; min-width: 0;
+    padding: 16px 20px 6px; max-height: 60vh; overflow-y: auto;
+    display: none;
+  }
+  .modal.wide.detail-open .split-detail { display: block; animation: fadeIn .22s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateX(6px); } to { opacity: 1; transform: none; } }
+  .detail-head { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
+  .detail-head .modal-tag { font-size: 1.1rem; padding: 5px 10px; }
+  .detail-full { font-weight: 700; font-size: 1rem; }
+  .detail-source { margin-top: 10px; }
+
+  /* En pantallas angostas, el detalle se apila bajo la lista. */
+  @media (max-width: 680px) {
+    .split { flex-direction: column; }
+    .modal.wide.detail-open { width: min(560px, 100%); }
+    .split-divider { display: none !important; }
+    .modal.wide.detail-open .split-divider {
+      display: block; width: auto; height: 0; align-self: stretch;
+      margin: 4px 20px 12px; border-left: 0; border-top: 1px solid var(--line);
+    }
+    .split-detail { flex: 1 1 auto; }
+  }
+  footer.note {
+    max-width: 1180px; margin: 0 auto; padding: 10px 24px 24px; color: var(--muted); font-size: .82rem;
+  }
+  .no-results { color: var(--muted); padding: 30px 6px; text-align: center; }
+
+  /* Pie de página con imagen Bottom.jpeg. Se muestra COMPLETA (sin recorte),
+     a bajo alto, centrada, y con gradientes que la funden con el fondo. */
+  .site-foot {
+    position: relative; width: 100%; line-height: 0; margin-top: 18px;
+    text-align: center; overflow: hidden;
+  }
+  .site-foot img {
+    width: auto; max-width: 100%; max-height: 110px; height: auto;
+    display: inline-block; margin: 0 auto;
+  }
+  /* Degradado que funde los bordes de la imagen con el fondo de la página. */
+  .site-foot::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(to right, var(--bg) 0%, rgba(242,241,241,0) 12%, rgba(242,241,241,0) 88%, var(--bg) 100%),
+      linear-gradient(to bottom, var(--bg) 0%, rgba(242,241,241,0) 22%, rgba(242,241,241,0) 85%, var(--bg) 100%);
+  }
+  @media (max-width: 560px) { .site-foot img { max-height: 78px; } }
+
+  /* ============================================================
+     BARRA DE PESTAÑAS (navegación entre secciones)
+  ============================================================ */
+  .tabs {
+    max-width: 1180px; margin: 16px auto 0; padding: 0 24px;
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    appearance: none; cursor: pointer;
+    background: #fff; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 10px 20px; font-size: 1rem; font-weight: 700;
+    transition: background .12s ease, border-color .12s ease, color .12s ease, box-shadow .12s ease;
+  }
+  .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; border-color: transparent;
+    box-shadow: 0 6px 16px rgba(122,27,85,.22);
+  }
+  .tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Secciones conmutables: solo una visible a la vez. */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ============================================================
+     SECCIÓN NORMATIVA (reutiliza la estética del glosario)
+  ============================================================ */
+  .section-divider {
+    max-width: 1180px; margin: 10px auto 0; padding: 0 24px;
+  }
+  .section-divider hr {
+    border: 0; border-top: 1px solid var(--line); margin: 24px 0 0;
+  }
+  .section-head {
+    max-width: 1180px; margin: 26px auto 0; padding: 0 24px;
+  }
+  .section-head h2 {
+    font-size: 1.3rem; margin: 0; color: var(--accent); letter-spacing: .2px;
+  }
+  .section-head p { color: var(--muted); margin: 6px 0 0; font-size: .95rem; }
+
+  /* Enlace al documento (PDF en Drive) dentro del detalle de la norma. */
+  .doc-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff;
+    border: 0; padding: 9px 16px; border-radius: 10px; font-weight: 700;
+    font-size: .9rem; text-decoration: none; cursor: pointer;
+  }
+  .doc-link:hover { filter: brightness(1.07); }
+  .doc-link.disabled {
+    background: #cdd3db; color: #6b7684; cursor: not-allowed; pointer-events: none;
+  }
+  /* Fila de acciones del documento (ver aquí / abrir en Drive). */
+  .doc-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .doc-actions .doc-link { margin-top: 0; }
+  /* Enlace alternativo (abrir en Drive): estilo secundario, menos protagonista. */
+  .doc-link-alt {
+    background: #faf4f8; color: var(--accent); border: 1px solid var(--accent);
+  }
+  .doc-link-alt:hover { background: #f1e2ec; filter: none; }
+  /* Visor de PDF grande dedicado (modal casi a pantalla completa). */
+  .pdf-overlay {
+    position: fixed; inset: 0; background: rgba(31,39,51,.6);
+    display: none; align-items: center; justify-content: center; padding: 20px; z-index: 60;
+  }
+  .pdf-overlay.show { display: flex; }
+  .pdf-modal {
+    position: relative; width: min(1100px, 96vw); height: 92vh;
+    background: var(--card); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(31,39,51,.35);
+    display: flex; flex-direction: column;
+  }
+  .pdf-modal-head {
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-bottom: 1px solid var(--line); flex: none;
+  }
+  .pdf-modal-head .pdf-title { font-weight: 700; flex: 1 1 auto; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pdf-modal iframe { flex: 1 1 auto; width: 100%; border: 0; display: block; }
+  /* En Normativa el panel de detalle es más ancho (texto jurídico extenso). */
+  .modal.wide.norma-detail.detail-open { width: min(980px, 100%); }
+  .modal.wide.norma-detail.detail-open .split-detail { flex: 0 0 50%; }
+  @media (max-width: 680px) {
+    .modal.wide.norma-detail.detail-open { width: min(560px, 100%); }
+  }
+</style>
+</head>
+<body>
+  <!-- Cabecera (Head.jpeg) -->
+  <div class="site-head" role="img" aria-label="Cabecera Dartel"></div>
+
+  <header class="top">
+    <div class="brand">
+      <span class="logo"><img src="https://raw.githubusercontent.com/fdelafuenteb/dartelsostenibilidad/main/Logotipos%20y%20Don%20Electro/Logo.jpeg" alt="Dartel Electricidad" /></span>
+      <div>
+        <h1>Sostenibilidad Dartel</h1>
+        <p class="subtitle">Glosario y normativa ambiental · Dartel S.A. (Chile)</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Barra de pestañas: alterna entre Glosario y Normativa Ambiental -->
+  <nav class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab-btn active" id="tabGlosario" role="tab" aria-selected="true" aria-controls="panelGlosario" type="button">Glosario</button>
+    <button class="tab-btn" id="tabNormativa" role="tab" aria-selected="false" aria-controls="panelNormativa" type="button">Normativa Ambiental</button>
+  </nav>
+
+  <!-- ======================= PANEL: GLOSARIO ======================= -->
+  <div class="tab-panel active" id="panelGlosario" role="tabpanel" aria-labelledby="tabGlosario">
+
+  <section class="section-head">
+    <h2>Glosario</h2>
+    <p>Siglas de sostenibilidad y gestión ambiental, organizadas por el organismo rector de cada una. Haz clic en una tarjeta para ver sus siglas; al abrir una sigla se despliega su definición al costado. Vuelve a hacer clic en la misma sigla para contraer.</p>
+  </section>
+
+  <div class="toolbar">
+    <label class="search">
+      <span aria-hidden="true">🔍</span>
+      <input id="search" type="text" placeholder="Buscar sigla o palabra (ej. REP, energía, residuos)…" autocomplete="off" />
+    </label>
+    <span class="count-pill" id="countPill"></span>
+  </div>
+
+  <main>
+    <div class="grid" id="grid"></div>
+    <p class="no-results" id="noResults" style="display:none;">Sin coincidencias para tu búsqueda.</p>
+  </main>
+
+  <footer class="note">
+    Mapa organizado por el organismo rector de cada sigla. Haz clic en cualquier parte de una tarjeta para abrir sus siglas en una ventana; si el organismo no tiene más siglas, se abre directamente su definición. También puedes hacer clic en el recuadro de la sigla del organismo rector dentro de la tarjeta para ir directo a su definición. Las dependencias institucionales son referenciales.
+  </footer>
+  </div><!-- /panelGlosario -->
+
+  <!-- Modal: definición de una sigla -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-tag" id="mTag">—</div>
+        <div class="modal-title">
+          <div class="full" id="mTitle">—</div>
+          <div class="org" id="mOrg">—</div>
+        </div>
+        <button class="close-btn" id="xBtn" title="Cerrar" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="field-label">Definición</div>
+        <p id="mDef">—</p>
+        <div class="field-label">Descripción breve</div>
+        <p id="mDesc">—</p>
+      </div>
+      <div class="modal-foot">
+        <div class="source" id="mSource"></div>
+        <button class="btn-close-foot" id="closeFoot">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: lista de siglas de un organismo (con panel de detalle lateral) -->
+  <div class="overlay" id="listOverlay" role="dialog" aria-modal="true" aria-labelledby="lTitle">
+    <div class="modal wide" id="listModal">
+      <div class="modal-head">
+        <div class="modal-tag" id="lIcon">—</div>
+        <div class="modal-title">
+          <div class="full" id="lTitle">—</div>
+          <div class="org" id="lSub">—</div>
+        </div>
+        <button class="close-btn" id="lX" title="Cerrar" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="split">
+        <!-- Columna izquierda: lista de siglas -->
+        <div class="split-list">
+          <p class="list-intro" id="lIntro"></p>
+          <button class="self-row" id="lSelfRow" style="display:none;">
+            <span class="m-icon" aria-hidden="true" style="width:40px;height:40px;font-size:1.1rem;">🏛️</span>
+            <span>
+              <span class="sr-tag" id="lSelfTag"></span> — organismo rector<br>
+              <span class="sr-full" id="lSelfFull"></span>
+            </span>
+          </button>
+          <div class="sigla-list" id="lList"></div>
+        </div>
+
+        <!-- Divisor vertical (no llega a los extremos) -->
+        <div class="split-divider" id="splitDivider" aria-hidden="true"></div>
+
+        <!-- Columna derecha: detalle de la sigla seleccionada -->
+        <div class="split-detail" id="splitDetail">
+          <div class="detail-head">
+            <span class="modal-tag" id="dTag">—</span>
+            <span class="detail-full" id="dFull">—</span>
+          </div>
+          <div class="field-label">Definición</div>
+          <p id="dDef">—</p>
+          <div class="field-label">Descripción breve</div>
+          <p id="dDesc">—</p>
+          <div class="source detail-source" id="dSource"></div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <span class="source"><span id="lFootHint">Haz clic en una sigla para ver su definición al costado.</span></span>
+        <button class="btn-close-foot" id="lCloseFoot">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= PANEL: NORMATIVA AMBIENTAL ======================= -->
+  <div class="tab-panel" id="panelNormativa" role="tabpanel" aria-labelledby="tabNormativa">
+
+  <section class="section-head">
+    <h2>Normativa Ambiental</h2>
+    <p>Leyes y decretos aplicables, organizados por el organismo que los dicta. Haz clic en una tarjeta para ver sus normas; al abrir una norma se despliega su detalle al costado. Vuelve a hacer clic en la misma norma para contraer.</p>
+  </section>
+
+  <div class="toolbar">
+    <label class="search">
+      <span aria-hidden="true">🔍</span>
+      <input id="searchNorma" type="text" placeholder="Buscar norma (ej. REP, 19.300, residuos, clima)…" autocomplete="off" />
+    </label>
+    <span class="count-pill" id="countPillNorma"></span>
+  </div>
+
+  <main>
+    <div class="grid" id="gridNorma"></div>
+    <p class="no-results" id="noResultsNorma" style="display:none;">Sin coincidencias para tu búsqueda.</p>
+  </main>
+  </div><!-- /panelNormativa -->
+
+  <!-- Modal: lista de normas de un organismo (con panel de detalle lateral) -->
+  <div class="overlay" id="normaOverlay" role="dialog" aria-modal="true" aria-labelledby="nTitle">
+    <div class="modal wide norma-detail" id="normaModal">
+      <div class="modal-head">
+        <div class="modal-tag" id="nIcon">—</div>
+        <div class="modal-title">
+          <div class="full" id="nTitle">—</div>
+          <div class="org" id="nSub">—</div>
+        </div>
+        <button class="close-btn" id="nX" title="Cerrar" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="split">
+        <!-- Columna izquierda: lista de normas -->
+        <div class="split-list">
+          <p class="list-intro" id="nIntro"></p>
+          <div class="sigla-list" id="nList"></div>
+        </div>
+
+        <!-- Divisor vertical -->
+        <div class="split-divider" id="nSplitDivider" aria-hidden="true"></div>
+
+        <!-- Columna derecha: detalle de la norma seleccionada -->
+        <div class="split-detail" id="nSplitDetail">
+          <div class="detail-head">
+            <span class="modal-tag" id="ndTag">—</span>
+            <span class="detail-full" id="ndFull">—</span>
+          </div>
+          <div class="field-label">Definición breve</div>
+          <p id="ndDef">—</p>
+          <div class="field-label">Descripción</div>
+          <p id="ndDesc">—</p>
+          <div class="doc-actions">
+            <button class="doc-link" id="ndToggle" type="button">📄 Ver documento</button>
+            <a class="doc-link doc-link-alt" id="ndDoc" href="#" target="_blank" rel="noopener">↗ Abrir en Drive</a>
+          </div>
+          <div class="source detail-source" id="ndSource"></div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <span class="source"><span id="nFootHint">Haz clic en una norma para ver su detalle al costado.</span></span>
+        <button class="btn-close-foot" id="nCloseFoot">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visor de PDF grande dedicado (se abre sobre todo lo demás) -->
+  <div class="pdf-overlay" id="pdfOverlay" role="dialog" aria-modal="true" aria-labelledby="pdfTitle">
+    <div class="pdf-modal">
+      <div class="pdf-modal-head">
+        <span class="pdf-title" id="pdfTitle">Documento</span>
+        <a class="doc-link doc-link-alt" id="pdfOpenDrive" href="#" target="_blank" rel="noopener">↗ Abrir en Drive</a>
+        <button class="close-btn" id="pdfX" title="Cerrar" aria-label="Cerrar">✕</button>
+      </div>
+      <iframe id="pdfFrame" title="Visor de documento" src=""></iframe>
+    </div>
+  </div>
+
+<script>
+/* ============================================================
+   DATOS DEL GLOSARIO
+   Cada sigla: definición, descripción breve y fuente (si aplica).
+   Fuentes rephraseadas por cumplimiento de licencia.
+============================================================ */
+const MINISTRIES = [
+  {
+    id: "mma", icon: "🌱", name: "Ministerio del Medio Ambiente", selfSigla: "MMA",
+    sub: "MMA · SEA · SMA y su institucionalidad",
+    siglas: [
+      { s:"MMA", full:"Ministerio del Medio Ambiente",
+        def:"Órgano del Estado responsable del diseño y aplicación de políticas, planes y normas en materia ambiental en Chile.",
+        desc:"Rectoría ambiental nacional; de él dependen el SEA y la SMA, y coordina los instrumentos de cambio climático y economía circular.",
+        keywords:["ministerio","medioambiente","ambiental","politica ambiental","regulador","estado","gobierno","sustentabilidad","sostenibilidad","desarrollo sostenible","medio ambiente","cambio climatico","economia circular","biodiversidad","conservacion","ley 19300","ley marco cambio climatico","ecrcc","educacion ambiental"],
+        src:{t:"MMA · Sobre el Ministerio", u:"https://mma.gob.cl/ministerio/"} },
+      { s:"SEA", full:"Servicio de Evaluación Ambiental",
+        def:"Servicio público que administra el Sistema de Evaluación de Impacto Ambiental (SEIA).",
+        desc:"Tramita las DIA y los EIA de los proyectos y emite el pronunciamiento que deriva en la RCA.",
+        keywords:["evaluacion ambiental","permiso ambiental","proyecto","dia","eia","tramitacion","impacto","declaracion de impacto ambiental","estudio de impacto ambiental","linea de base","participacion ciudadana","pac","adenda","icsara","titular del proyecto","ingreso al seia"],
+        src:{t:"SEA · Quiénes somos", u:"https://www.sea.gob.cl/quienes-somos"} },
+      { s:"SEIA", full:"Sistema de Evaluación de Impacto Ambiental",
+        def:"Instrumento de gestión que evalúa el impacto ambiental de proyectos y actividades antes de su ejecución.",
+        desc:"Si un proyecto de Dartel (p. ej. nueva bodega o faena de magnitud) cae en el listado legal, debe ingresar al SEIA.",
+        keywords:["evaluacion impacto","permiso","proyecto nuevo","bodega","instalacion","estudio impacto","declaracion impacto","dia","eia","declaracion de impacto ambiental","estudio de impacto ambiental","sistema de evaluacion","listado del articulo 10","ingreso al seia","evaluacion ambiental de proyectos","impacto significativo"],
+        src:{t:"SEA · ¿Qué es el SEIA?", u:"https://www.sea.gob.cl/que-es-el-seia"} },
+      { s:"RSEIA", full:"Reglamento del Sistema de Evaluación de Impacto Ambiental",
+        def:"Cuerpo reglamentario que detalla cómo se aplica el SEIA.",
+        desc:"Define tipologías de ingreso, contenidos de DIA/EIA y procedimientos de evaluación.",
+        keywords:["reglamento","normativa seia","procedimiento","evaluacion","tipologia de ingreso","pertinencia de ingreso","titular","consulta de pertinencia","dto 40","decreto 40","contenido dia","contenido eia"],
+        src:{t:"Reglamento del SEIA · DS 40 (LeyChile)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1053563"} },
+      { s:"RCA", full:"Resolución de Calificación Ambiental",
+        def:"Acto administrativo que califica ambientalmente un proyecto evaluado en el SEIA, aprobándolo o rechazándolo.",
+        desc:"Contiene las condiciones y compromisos ambientales exigibles al titular; su incumplimiento es fiscalizado por la SMA.",
+        keywords:["permiso ambiental","aprobacion","calificacion","resolucion","compromisos","autorizacion","rca favorable","condiciones ambientales","exigencias","seguimiento ambiental","permiso de operacion"],
+        src:{t:"SEA · ¿Qué es el SEIA?", u:"https://www.sea.gob.cl/que-es-el-seia"} },
+      { s:"SMA", full:"Superintendencia del Medio Ambiente",
+        def:"Organismo fiscalizador del cumplimiento de los instrumentos de gestión ambiental, incluidas las RCA y la Ley REP.",
+        desc:"Fiscaliza y sanciona; administra el RETC y aspectos del cumplimiento de la REP.",
+        keywords:["fiscalizacion","sancion","multa","cumplimiento","inspeccion","superintendencia","control","denuncia","procedimiento sancionatorio","programa de cumplimiento","autodenuncia","snifa","medida provisional","clausura","declaraciones ambientales","ruea","sinader","sidrep","retc","reportes obligatorios"],
+        src:{t:"SMA · Qué es la SMA", u:"https://portal.sma.gob.cl/index.php/portal-regulados/instructivos-y-guias/que-es-la-sma/"} },
+      { s:"RETC", full:"Registro de Emisiones y Transferencias de Contaminantes",
+        def:"Registro público de emisiones al aire, agua y suelo, y de transferencias de residuos y contaminantes.",
+        desc:"Varias declaraciones ambientales de las empresas confluyen en este registro a través de la Ventanilla Única.",
+        keywords:["emisiones","contaminantes","registro","declaracion","reporte","transferencia","aire","agua","suelo","fuentes fijas","fuentes moviles","inventario de emisiones","f138","f140","declaracion anual","emisiones atmosfericas","vertimientos","ruido",
+          "ruea","registro unico de emisiones atmosfericas","rfp","registro de fuentes y procesos","fuentes y procesos","fuentes puntuales","fuente de combustion","grupos electrogenos","calderas","declaracion de emisiones","sistema sectorial","vu retc","declaracion retc","declaracion de establecimientos"],
+        src:{t:"RETC · ¿Qué es el RETC?", u:"https://retc.mma.gob.cl/que-es-el-retc/"} },
+      { s:"RFP", full:"Registro de Fuentes y Procesos",
+        def:"Sistema sectorial de la Ventanilla Única del RETC en el que se declaran las fuentes y procesos de un establecimiento, principalmente los grupos electrógenos.",
+        desc:"Clave para Dartel: los grupos electrógenos (fuentes fijas de combustión) se declaran a través del RFP para el reporte de emisiones.",
+        keywords:["registro de fuentes y procesos","rfp","fuentes y procesos","grupos electrogenos","grupo electrogeno","fuente de combustion","fuente fija","declaracion de emisiones","sistema sectorial","vu retc","retc","ventanilla unica","calderas"],
+        src:{t:"Portal Ventanilla Única · RFP", u:"https://portalvu.mma.gob.cl/rfp/"} },
+      { s:"RUEA", full:"Registro Único de Emisiones Atmosféricas",
+        def:"Sistema de la Ventanilla Única del RETC mediante el cual los establecimientos regulados reportan sus emisiones atmosféricas en cumplimiento de la normativa vigente.",
+        desc:"Es el proceso de declaración anual de emisiones al aire; en él confluyen las fuentes fijas, incluidos los grupos electrógenos.",
+        keywords:["registro unico de emisiones atmosfericas","ruea","emisiones atmosfericas","declaracion de emisiones","fuentes fijas","fuentes puntuales","f138","grupos electrogenos","calderas","sistema sectorial","vu retc","retc","ventanilla unica","declaracion anual"],
+        src:{t:"Portal Ventanilla Única · RUEA", u:"https://portalvu.mma.gob.cl/ruea/"} },
+      { s:"REP", full:"Responsabilidad Extendida del Productor",
+        def:"Mecanismo de la Ley 20.920 por el cual los productores de productos prioritarios financian y organizan la gestión de los residuos derivados de sus productos.",
+        desc:"Clave para Dartel: productos eléctricos/electrónicos (RAEE), pilas y baterías pueden quedar sujetos a metas de recolección y valorización.",
+        keywords:["reciclaje","economia circular","productor","productos prioritarios","pilas","baterias","envases","valorizacion","ley 20920","residuos","reutilizacion","recuperacion","valorizacion material","valorizacion energetica","recoleccion","importador","metas de recoleccion","ecoetiquetado","aceites lubricantes","envases y embalajes","diseno ecologico","ecodiseno","puntos limpios","puntos verdes"],
+        src:{t:"Economía Circular · MMA (Ley REP)", u:"https://economiacircular.mma.gob.cl/ley-rep/"} },
+      { s:"SG (REP)", full:"Sistema de Gestión (Ley REP)",
+        def:"Persona jurídica sin fines de lucro mediante la cual los productores, individual o colectivamente, cumplen las obligaciones de la Ley REP a través de un plan de gestión.",
+        desc:"Es el vehículo operativo con el que un productor adscribe al cumplimiento de sus metas REP.",
+        keywords:["sistema colectivo","sistema individual","plan de gestion","reciclaje","productor","gestor","sin fines de lucro","gira","gestores","metas","cumplimiento rep","convenio con municipios","recolectores de base"],
+        src:{t:"SMA · Preguntas frecuentes REP", u:"https://portal.sma.gob.cl/index.php/ley-rep/preguntas-frecuentes/"} },
+      { s:"RAEE", full:"Residuos de Aparatos Eléctricos y Electrónicos",
+        def:"Residuos provenientes de aparatos que funcionan con corriente eléctrica o campos electromagnéticos, una vez descartados.",
+        desc:"Categoría de alta relevancia para Dartel por su giro de materiales eléctricos; es producto prioritario bajo la Ley REP.",
+        keywords:["electronicos","aparatos","chatarra electronica","e-waste","basura electronica","cables","equipos","tecnologia","reciclaje","residuo electronico","residuos electronicos","tableros","luminarias","ampolletas","computadores","electrodomesticos","aparato electrico","gestor autorizado"],
+        src:{t:"Economía Circular · Aparatos eléctricos y electrónicos", u:"https://economiacircular.mma.gob.cl/aparatos-electricos-y-electronicos"} },
+      { s:"RESPEL", full:"Residuos Peligrosos",
+        def:"Residuos que presentan riesgo para la salud o el medio ambiente por sus características (toxicidad, inflamabilidad, corrosividad, reactividad).",
+        desc:"Su manejo se rige por el DS 148; se declaran y siguen en el SIDREP.",
+        keywords:["toxico","inflamable","corrosivo","reactivo","peligroso","ds 148","aceites","solventes","quimicos","incineracion","coprocesamiento","co-procesamiento","disposicion final","tratamiento","relleno de seguridad","residuo peligroso","residuos peligrosos","aceites usados","baterias plomo","pilas","asbesto","trapos contaminados","envases contaminados","generador de residuos","declaracion de residuos peligrosos"],
+        src:{t:"Reglamento RESPEL · DS 148 (LeyChile)", u:"https://www.bcn.cl/leychile/navegar?idNorma=226458"} },
+      { s:"SINADER", full:"Sistema Nacional de Declaración de Residuos",
+        def:"Plataforma para la declaración de residuos no peligrosos por parte de los establecimientos obligados.",
+        desc:"Permite reportar generación y destino de residuos sólidos; se accede vía Ventanilla Única del RETC.",
+        keywords:["residuos","declaracion","no peligrosos","reporte","basura","desechos",
+          "sinader","declaracion de residuos","sistema sectorial","vu retc","declaracion retc","declaracion anual de residuos","reporte de residuos","f3","registro de residuos",
+          "residuo industrial","residuos industriales","residuo organico","residuos organicos","organico","inorganico","residuo inorganico","residuos inorganicos","residuo solido","residuos solidos","residuo domiciliario","residuo asimilable","residuo comercial","lodos","chatarra","escombros",
+          "valorizacion","reciclaje","reciclar","compostaje","compost","digestion anaerobica","biodigestion","biodigestor","biol","recoleccion","pretratamiento","pre-tratamiento","segregacion","reutilizacion","recuperacion",
+          "disposicion final","relleno sanitario","sitio de disposicion final","basural","vertedero","incineracion","valorizacion energetica","incineracion con generacion de energia","coprocesamiento","co-procesamiento","coproceso","co-proceso","planta de tratamiento","tratamiento de residuos","gestion de residuos","manejo de residuos"],
+        src:{t:"Portal Ventanilla Única · SINADER", u:"https://portalvu.mma.gob.cl/sinader/"} },
+      { s:"RSD", full:"Residuos Sólidos Domiciliarios",
+        def:"Residuos generados en los hogares producto de las actividades domésticas.",
+        desc:"Referencia de clasificación de residuos municipales en la normativa ambiental.",
+        keywords:["basura","desechos","hogar","domestico","municipal","residuos","recoleccion municipal","residuo domiciliario","residuos domiciliarios","retiro de basura","aseo"],
+        src:null },
+      { s:"RSDyA", full:"Residuos Sólidos Domiciliarios y Asimilables",
+        def:"RSD junto con residuos de comercio, oficinas y servicios de características similares a los domiciliarios.",
+        desc:"Categoría que suele aplicar a la operación de oficinas y bodegas de empresas como Dartel.",
+        keywords:["oficina","bodega","comercio","asimilable","residuos","desechos","residuos asimilables","residuo comercial","residuo de servicios","similares a domiciliarios","retiro de residuos"],
+        src:null },
+      { s:"NFU", full:"Neumáticos Fuera de Uso",
+        def:"Neumáticos que han terminado su vida útil y se convierten en residuo.",
+        desc:"Producto prioritario de la Ley REP con metas específicas de valorización.",
+        keywords:["neumaticos","ruedas","vehiculos","reciclaje","producto prioritario","rep","neumatico fuera de uso","caucho","valorizacion de neumaticos","neumaticos usados","maquinaria"],
+        src:{t:"Economía Circular · Neumáticos", u:"https://economiacircular.mma.gob.cl/neumaticos/"} },
+      { s:"APL", full:"Acuerdo de Producción Limpia",
+        def:"Convenio voluntario entre un sector productivo y el Estado para mejorar su desempeño productivo y ambiental.",
+        desc:"Instrumento de la ASCC; sirve a empresas para formalizar compromisos ambientales certificables.",
+        keywords:["produccion limpia","acuerdo voluntario","certificacion","sustentabilidad","compromiso","convenio","apl","sello pyme","sello de sustentabilidad","desempeno ambiental","gestion de recursos","eficiencia hidrica"],
+        src:{t:"ASCC · Acuerdos de Producción Limpia", u:"https://www.ascc.cl/produccion-limpia/"} },
+      { s:"HdC", full:"Huella de Carbono",
+        def:"Total de gases de efecto invernadero emitidos directa o indirectamente por una organización, producto o actividad.",
+        desc:"Base para reportes climáticos corporativos; en Chile el programa HuellaChile del MMA apoya su gestión.",
+        keywords:["carbono","co2","emisiones","cambio climatico","huellachile","carbono neutralidad","clima","cuantificacion","cuantificar","medicion de carbono","reduccion","reduccion de emisiones","reduccion de huella","neutralizacion","neutralidad","carbono neutral","compensacion","sello de excelencia","excelencia","descarbonizacion","gestion del carbono"],
+        src:{t:"HuellaChile · Preguntas frecuentes", u:"https://huellachile.mma.gob.cl/preguntas-frecuentes/"} },
+      { s:"GEI", full:"Gas de Efecto Invernadero",
+        def:"Gases atmosféricos que retienen calor y contribuyen al calentamiento global (CO2, CH4, N2O, entre otros).",
+        desc:"Unidad base de medición de la huella de carbono y de los compromisos climáticos.",
+        keywords:["co2","metano","dioxido de carbono","calentamiento global","emisiones","clima","invernadero","oxido nitroso","gases fluorados","hfc","sf6","co2 equivalente","efecto invernadero","gases contaminantes"],
+        src:null },
+      { s:"FCVC", full:"Forzantes Climáticos de Vida Corta",
+        def:"Contaminantes con breve permanencia en la atmósfera pero alto potencial de calentamiento o daño (p. ej. carbono negro, metano).",
+        desc:"Objetivo de medidas combinadas de clima y calidad del aire.",
+        keywords:["carbono negro","metano","hollin","calidad del aire","contaminacion","clima","ozono troposferico","material particulado","contaminantes de vida corta","mitigacion","forzante climatico"],
+        src:null },
+      { s:"MRV", full:"Monitoreo, Reporte y Verificación de gases de efecto invernadero",
+        def:"Conjunto de procesos para medir, informar y verificar las emisiones de GEI de forma consistente y comparable.",
+        desc:"Da trazabilidad y credibilidad a los inventarios y reportes de emisiones.",
+        keywords:["monitoreo","reporte","verificacion","inventario","emisiones","trazabilidad","medicion","mrv","inventario de gases","reporte de emisiones","validacion","auditoria de emisiones","contabilidad de carbono"],
+        src:null }
+    ]
+  },
+  {
+    id: "energia", icon: "⚡", name: "Ministerio de Energía", selfSigla: "MINENERGIA",
+    sub: "SEC · AgenciaSE · eficiencia energética",
+    siglas: [
+      { s:"MINENERGIA", full:"Ministerio de Energía",
+        def:"Órgano del Estado a cargo de las políticas de energía, incluida la eficiencia energética y las energías renovables.",
+        desc:"Relevante para Dartel por su giro eléctrico y por las obligaciones de la Ley de Eficiencia Energética.",
+        keywords:["ministerio","energia","electricidad","renovables","politica energetica","estado","gobierno","transicion energetica","descarbonizacion","carbono neutralidad","energia 2050","matriz energetica","combustibles","hidrogeno verde","electromovilidad"],
+        src:{t:"Ministerio de Energía · Sobre el ministerio", u:"https://energia.gob.cl/ministerio"} },
+      { s:"SEC", full:"Superintendencia de Electricidad y Combustibles",
+        def:"Servicio dependiente del Ministerio de Energía que fiscaliza que electricidad, gas y combustibles cumplan la normativa y sean seguros.",
+        desc:"Clave para Dartel: certificación y seguridad de productos y materiales eléctricos.",
+        keywords:["electricidad","combustibles","gas","certificacion","sello","seguridad electrica","fiscalizacion","producto electrico","superintendencia","grupo electrogeno","grupos electrogenos","electrogeno","generador","generadores","generador electrico","sello sec","te1","te4","instalacion electrica","declaracion electrica","tablero electrico","medidor","empalme","instalador autorizado","fuente de combustion","fuente fija","grupo electrogeno ruea","declaracion de emisiones","ruea","f138","rfp","registro de fuentes y procesos","fuentes y procesos"],
+        src:{t:"SEC · Acerca de SEC", u:"https://www.sec.cl/area-sec/acerca-de-sec/"} },
+      { s:"AgenciaSE", full:"Agencia de Sostenibilidad Energética",
+        def:"Fundación de derecho privado sin fines de lucro, vinculada al Ministerio de Energía, que ejecuta programas de eficiencia energética y energías sostenibles.",
+        desc:"Promueve electromovilidad, hidrógeno verde y eficiencia energética en el sector productivo.",
+        keywords:["electromovilidad","hidrogeno verde","eficiencia","agencia","sostenibilidad energetica","programas","auto electrico","carga electrica","sello de eficiencia energetica","gestor energetico","capacitacion","asesoria energetica","giro limpio"],
+        src:{t:"AgenciaSE", u:"https://www.agenciase.org/quienes-somos/"} },
+      { s:"EE", full:"Eficiencia Energética",
+        def:"Uso de menos energía para obtener el mismo resultado o servicio, reduciendo desperdicio.",
+        desc:"Eje de la Ley 21.305 y oportunidad comercial directa para Dartel (productos y soluciones eficientes).",
+        keywords:["ahorro energetico","consumo","eficiencia","ley 21305","intensidad energetica","iluminacion led","optimizacion","transicion energetica","descarbonizacion","eficiencia energetica","etiquetado energetico","consumo electrico","aislacion termica","recambio luminarias","motores eficientes","variadores de frecuencia"],
+        src:{t:"Min. Energía · Ley y Plan de Eficiencia Energética", u:"https://energia.gob.cl/ley-y-plan-de-eficiencia-energetica"} },
+      { s:"SGE", full:"Sistema de Gestión de la Energía",
+        def:"Sistema de gestión (referido a la norma ISO 50001) que la Ley 21.305 exige implementar y mantener a los consumidores con capacidad de gestión de energía.",
+        desc:"Marco para planificar, medir y mejorar el desempeño energético de una organización.",
+        keywords:["iso 50001","gestion energia","desempeno energetico","ahorro","ley 21305","sistema de gestion","linea base energetica","indicador de desempeno energetico","mejora continua","consumo energetico","auditoria energetica"],
+        src:{t:"ISOTools · ISO 50001", u:"https://isotools.org/normas/sistemas-de-gestion-ambiental-y-energia/iso-50001/"} },
+      { s:"CCGE", full:"Consumidor con Capacidad de Gestión de Energía",
+        def:"Categoría de la Ley 21.305 para grandes consumidores (ventas sobre 100.000 UF/año y/o consumos superiores a 50 teracalorías) obligados a gestionar activamente su energía.",
+        desc:"Si una empresa alcanza estos umbrales, debe reportar consumos e implementar un SGE.",
+        keywords:["gran consumidor","obligado","ley 21305","consumo energia","teracalorias","uf","reporte energetico","gran empresa","consumidor energetico","registro de consumo","obligacion legal","energia anual"],
+        src:null },
+      { s:"PNEE", full:"Plan Nacional de Eficiencia Energética",
+        def:"Instrumento de planificación del Estado con metas y medidas de eficiencia energética a nivel país.",
+        desc:"Marca objetivos de reducción de intensidad energética que orientan al sector productivo.",
+        keywords:["plan nacional","eficiencia","metas","ahorro energia","politica energetica","meta de eficiencia","reduccion de consumo","planificacion energetica","carbono neutralidad","intensidad energetica"],
+        src:{t:"Ley y Plan EE · Min. Energía", u:"https://energia.gob.cl/ley-y-plan-de-eficiencia-energetica"} },
+      { s:"ERNC", full:"Energía Renovable No Convencional",
+        def:"Energías renovables distintas de la gran hidroeléctrica (solar, eólica, geotérmica, biomasa, mini hidro, entre otras).",
+        desc:"Relevante para proyectos de generación y soluciones eléctricas sostenibles.",
+        keywords:["solar","eolica","fotovoltaica","geotermia","biomasa","energia limpia","renovable","generacion","paneles solares","mini hidro","energia renovable","autoconsumo","netbilling","generacion distribuida","pmgd"],
+        src:null },
+      { s:"BNE", full:"Balance Nacional de Energía",
+        def:"Informe estadístico anual del Ministerio de Energía que contabiliza la producción, transformación, venta y consumo de energía del país en un año calendario.",
+        desc:"Las empresas reportan su información energética mediante el sistema SIBNE; sirve de base para la política energética y la medición de la intensidad energética.",
+        keywords:["balance nacional de energia","sibne","reporte de consumo","consumo energetico","estadistica energetica","intensidad energetica","matriz energetica","transacciones de energia","encuesta energetica","reporte energetico"],
+        src:{t:"Balance Nacional de Energía · Min. Energía", u:"https://energia.gob.cl/pelp/balance-nacional-de-energia"} }
+    ]
+  },
+  {
+    id: "salud", icon: "🧪", name: "Ministerio de Salud", selfSigla: "MINSAL",
+    sub: "MINSAL · SEREMI de Salud",
+    siglas: [
+      { s:"MINSAL", full:"Ministerio de Salud",
+        def:"Órgano del Estado a cargo de la política sanitaria; a través de las SEREMI de Salud fiscaliza condiciones sanitarias y ambientales de los establecimientos.",
+        desc:"Autoriza y fiscaliza el manejo de residuos y sustancias peligrosas en instalaciones.",
+        keywords:["salud","sanitario","seremi salud","autorizacion sanitaria","higiene","ministerio","salud ocupacional","condiciones sanitarias","ds 594","resolucion sanitaria","inspeccion sanitaria","saneamiento basico"],
+        src:{t:"MINSAL · Ministerio de Salud", u:"https://www.minsal.cl/ministerio/"} },
+      { s:"SIDREP", full:"Sistema de Declaración y Seguimiento de Residuos Peligrosos",
+        def:"Plataforma para declarar y hacer seguimiento al movimiento de residuos peligrosos desde su generación hasta su disposición.",
+        desc:"Herramienta de cumplimiento del DS 148 para generadores de RESPEL.",
+        keywords:["residuos peligrosos","declaracion","seguimiento","transporte","ds 148","trazabilidad","respel","manifiesto","declaracion de residuos peligrosos","generador","destinatario","transportista","sitio de disposicion","plan de manejo","sidrep","declaracion sidrep","sistema sectorial","vu retc","declaracion retc","reporte de residuos peligrosos","aceites usados"],
+        src:{t:"SIDREP · MINSAL", u:"https://sidrep.minsal.cl/"} },
+      { s:"SUSPEL", full:"Sustancias Peligrosas",
+        def:"Sustancias o mezclas que, por sus propiedades, representan riesgo para la salud o el medio ambiente durante su manejo o almacenamiento.",
+        desc:"Su almacenamiento se rige por normativa sanitaria específica (p. ej. DS 43).",
+        keywords:["quimicos","almacenamiento","bodega","ds 43","inflamable","toxico","hoja de seguridad","peligroso","sustancia peligrosa","hds","bodega de sustancias","etiquetado","rotulado","nch 382","clase de peligro","derrame"],
+        src:{t:"Reglamento sustancias peligrosas · DS 43 (LeyChile)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1096256"} }
+    ]
+  },
+  {
+    id: "normalizacion", icon: "📐", name: "Normalización (INN · CORFO)", selfSigla: "INN",
+    sub: "Instituto Nacional de Normalización",
+    siglas: [
+      { s:"INN", full:"Instituto Nacional de Normalización",
+        def:"Entidad que coordina la elaboración de normas técnicas chilenas y gestiona la metrología y la acreditación.",
+        desc:"Fuente de las normas NCh aplicables a productos y sistemas de gestión.",
+        keywords:["normas","estandar","metrologia","acreditacion","certificacion","iso","normalizacion","norma tecnica","organismo de certificacion","laboratorio","calibracion","ensayo","nch"],
+        src:{t:"INN · Sobre el INN", u:"https://www.inn.cl/sobre-inn/"} },
+      { s:"NCh", full:"Norma Chilena",
+        def:"Norma técnica oficial chilena emitida a través del INN.",
+        desc:"Muchas normas de productos eléctricos y seguridad relevantes para Dartel son NCh.",
+        keywords:["norma chilena","estandar","producto electrico","seguridad","certificacion","requisito tecnico","nch elec","norma de instalacion","norma de seguridad","especificacion tecnica","norma oficial"],
+        src:{t:"INN · Catálogo de normas chilenas", u:"https://www.inn.cl/catalogo-de-normas"} },
+      { s:"ASCC", full:"Agencia de Sustentabilidad y Cambio Climático",
+        def:"Comité de CORFO que fomenta la producción sustentable y la acción climática en los sectores público y privado.",
+        desc:"Administra instrumentos como los Acuerdos de Producción Limpia (APL).",
+        keywords:["corfo","sustentabilidad","cambio climatico","produccion limpia","apl","carbono neutralidad","comite","produccion sustentable","economia circular","sello","resiliencia climatica","fomento productivo","sostenibilidad"],
+        src:{t:"ASCC · Quiénes somos", u:"https://www.ascc.cl/pagina/quienes_somos_1"} }
+    ]
+  },
+  {
+    id: "mop", icon: "💧", name: "Ministerio de Obras Públicas", selfSigla: "DGA",
+    sub: "Dirección General de Aguas",
+    siglas: [
+      { s:"DGA", full:"Dirección General de Aguas",
+        def:"Organismo del MOP encargado de la gestión de las aguas terrestres, los derechos de aprovechamiento y el resguardo del recurso hídrico.",
+        desc:"Pertinente ante usos de agua, obras asociadas o proyectos con componente hídrico.",
+        keywords:["agua","recurso hidrico","derechos de agua","aprovechamiento","rios","cuenca","mop","codigo de aguas","agua subterranea","pozo","caudal","sequia","escasez hidrica","gestion del agua","obras hidraulicas"],
+        src:{t:"DGA · MOP", u:"https://dga.mop.gob.cl/que-hacemos/"} }
+    ]
+  },
+  {
+    id: "agricultura", icon: "🌲", name: "Ministerio de Agricultura", selfSigla: "CONAF",
+    sub: "Corporación Nacional Forestal",
+    siglas: [
+      { s:"CONAF", full:"Corporación Nacional Forestal",
+        def:"Entidad encargada de administrar la política forestal y las áreas silvestres protegidas del Estado.",
+        desc:"Aplica cuando una faena o proyecto afecta vegetación nativa o áreas protegidas.",
+        keywords:["bosque","forestal","vegetacion nativa","areas protegidas","parques","incendios","reforestacion","snaspe","parque nacional","reserva nacional","bosque nativo","plan de manejo forestal","corta de arboles","flora","fauna"],
+        src:{t:"CONAF · Quiénes somos", u:"https://www.conaf.cl/quienes-somos/"} }
+    ]
+  },
+  {
+    id: "mineria", icon: "⛏️", name: "Ministerio de Minería", selfSigla: "MINMINERIA",
+    sub: "Institucional",
+    siglas: [
+      { s:"MINMINERIA", full:"Ministerio de Minería",
+        def:"Órgano del Estado a cargo de las políticas del sector minero.",
+        desc:"Relevante como cliente/sector para proveedores eléctricos y en materias ambientales mineras.",
+        keywords:["mineria","minero","sector minero","ministerio","cobre","faena minera","litio","mineral critico","minerales criticos","cobalto","tierras raras","salares","molibdeno","hierro","oro","plata","zinc","sernageomin","relaves","mineria verde","gran mineria","pequena mineria","concentrado","fundicion"],
+        src:{t:"Ministerio de Minería", u:"https://www.minmineria.cl/"} }
+    ]
+  },
+  {
+    id: "internacional", icon: "🌎", name: "Marcos internacionales y transversales",
+    sub: "ONU · acuerdos globales",
+    siglas: [
+      { s:"AP", full:"Acuerdo de París",
+        def:"Tratado internacional sobre cambio climático adoptado en 2015 para limitar el aumento de la temperatura global.",
+        desc:"Marco que orienta las metas climáticas nacionales (NDC) de Chile.",
+        keywords:["acuerdo paris","cambio climatico","tratado","2015","ndc","temperatura global","clima","1.5 grados","contribucion nacional","mitigacion","adaptacion","carbono neutralidad 2050","cop"],
+        src:{t:"CMNUCC · El Acuerdo de París", u:"https://unfccc.int/es/process-and-meetings/el-acuerdo-de-paris/que-es-el-acuerdo-de-paris"} },
+      { s:"CMNUCC", full:"Convención Marco de las Naciones Unidas sobre Cambio Climático",
+        def:"Tratado internacional base de la cooperación mundial frente al cambio climático.",
+        desc:"Bajo su marco se adoptaron el Protocolo de Kioto y el Acuerdo de París.",
+        keywords:["naciones unidas","onu","cambio climatico","tratado","kioto","clima","convencion","protocolo de kioto","cop","unfccc","cumbre climatica","acuerdo climatico"],
+        src:{t:"CMNUCC · Qué es la Convención", u:"https://unfccc.int/es/process-and-meetings/que-es-la-convencion-marco-de-las-naciones-unidas-sobre-el-cambio-climatico"} },
+      { s:"PNUMA", full:"Programa de las Naciones Unidas para el Medio Ambiente",
+        def:"Programa de la ONU que lidera la agenda ambiental mundial y promueve el desarrollo sostenible.",
+        desc:"Referente global de políticas y conocimiento ambiental.",
+        keywords:["naciones unidas","onu","unep","medioambiente","programa","agenda ambiental","global","medio ambiente","organismo internacional","politica ambiental global","gobernanza ambiental"],
+        src:{t:"PNUMA (UNEP)", u:"https://www.unep.org/es"} },
+      { s:"ODS", full:"Objetivos de Desarrollo Sostenible",
+        def:"Conjunto de 17 objetivos de la Agenda 2030 de la ONU para erradicar la pobreza, proteger el planeta y asegurar prosperidad.",
+        desc:"Marco de referencia para los compromisos de sostenibilidad corporativa.",
+        keywords:["agenda 2030","desarrollo sostenible","sostenibilidad","onu","17 objetivos","metas globales","sdg","objetivos globales","sustentabilidad","responsabilidad social","esg","triple impacto"],
+        src:{t:"ONU · Objetivos de Desarrollo Sostenible", u:"https://www.un.org/sustainabledevelopment/es/objetivos-de-desarrollo-sostenible/"} }
+    ]
+  },
+  {
+    id: "transversal", icon: "🗂️", name: "Instrumentos y conceptos transversales",
+    sub: "Aplicables a varios organismos",
+    siglas: [
+      { s:"SEREMI", full:"Secretaría Regional Ministerial",
+        def:"Representación regional de un ministerio, con atribuciones desconcentradas en su región.",
+        desc:"Las SEREMI (de Salud, Medio Ambiente, Energía, etc.) ejecutan y fiscalizan a nivel regional.",
+        keywords:["regional","region","ministerio","representacion","autoridad regional","secretaria regional","seremi de salud","seremi de medio ambiente","desconcentracion","gobierno regional"],
+        src:null },
+      { s:"SGA", full:"Sistema de Gestión Ambiental",
+        def:"Marco de gestión (referido a la norma ISO 14001) para planificar, controlar y mejorar el desempeño ambiental de una organización.",
+        desc:"Estructura recomendada para que Dartel ordene sus compromisos y cumplimiento ambiental.",
+        keywords:["iso 14001","gestion ambiental","certificacion","sistema de gestion","mejora continua","desempeno ambiental","politica ambiental","aspectos ambientales","impactos ambientales","auditoria ambiental","pdca","objetivos ambientales","cumplimiento legal"],
+        src:{t:"ISO 14001 · Norma de gestión ambiental", u:"https://www.iso.org/iso-14001-environmental-management.html"} },
+      { s:"SGI", full:"Sistema de Gestión Integrado",
+        def:"Sistema que integra en un solo marco la gestión de calidad, medio ambiente y seguridad y salud ocupacional (p. ej. ISO 9001, ISO 14001 e ISO 45001).",
+        desc:"Permite a una organización como Dartel gestionar de forma unificada sus procesos de calidad, ambiente y seguridad.",
+        keywords:["sistema de gestion integrado","sgi","iso 9001","iso 14001","iso 45001","calidad","medio ambiente","seguridad y salud ocupacional","integracion de sistemas","gestion integrada","mejora continua"],
+        src:{t:"ISO · Normas de sistemas de gestión", u:"https://www.iso.org/management-system-standards.html"} },
+      { s:"DS", full:"Decreto Supremo",
+        def:"Norma dictada por el Presidente de la República con la firma del ministro del ramo.",
+        desc:"Muchas regulaciones ambientales se expresan como DS (p. ej. DS 148 sobre RESPEL).",
+        keywords:["decreto","normativa","ley","reglamento","regulacion","ds 148","decreto supremo","norma legal","legislacion","diario oficial","dto","ds 594","ds 43"],
+        src:{t:"BCN · Acerca de Ley Chile", u:"https://www.bcn.cl/leychile/acerca-de-ley-chile"} },
+      { s:"PPDA", full:"Plan de Prevención y/o Descontaminación Atmosférica",
+        def:"Instrumento de gestión de la calidad del aire que fija medidas para zonas saturadas o latentes.",
+        desc:"Puede imponer exigencias operacionales a establecimientos ubicados en zonas con PPDA.",
+        keywords:["calidad del aire","contaminacion atmosferica","zona saturada","smog","descontaminacion","aire","zona latente","material particulado","mp2.5","mp10","emisiones atmosfericas","norma de calidad del aire","episodio critico","fuentes fijas","ruea","declaracion de emisiones","grupos electrogenos","calderas","fuente de combustion"],
+        src:{t:"MMA · Planes de descontaminación", u:"https://ppda.mma.gob.cl/"} },
+      { s:"VU", full:"Ventanilla Única",
+        def:"Punto único de acceso en línea para presentar diversas declaraciones ambientales ante el Estado.",
+        desc:"Centraliza el reporte al RETC (emisiones, residuos y transferencias).",
+        keywords:["ventanilla unica","plataforma","portal","declaracion","reporte","tramite en linea","retc","vu retc","sistema unico","declaracion unica","acceso unico","trámite ambiental","ruea","rfp","registro de fuentes y procesos","fuentes y procesos","sinader","sidrep","sistemas sectoriales","declaracion de emisiones","declaracion de residuos","f138","registro de declaraciones"],
+        src:{t:"Portal Ventanilla Única · RETC", u:"https://portalvu.mma.gob.cl/"} }
+    ]
+  }
+];
+
+/* ============================================================
+   RENDER
+============================================================ */
+const grid = document.getElementById('grid');
+const overlay = document.getElementById('overlay');
+const noResults = document.getElementById('noResults');
+const countPill = document.getElementById('countPill');
+
+function totalSiglas() {
+  return MINISTRIES.reduce((n, m) => n + m.siglas.length, 0);
+}
+
+const listOverlay = document.getElementById('listOverlay');
+
+/* Devuelve la sigla propia (rectora) de un organismo, si existe. */
+function getSelf(m) {
+  return m.selfSigla ? m.siglas.find(x => x.s === m.selfSigla) : null;
+}
+/* Siglas del organismo distintas de la propia, ordenadas alfabéticamente
+   (insensible a mayúsculas/acentos) para mostrarlas siempre en orden. */
+function getChildren(m) {
+  const self = getSelf(m);
+  return m.siglas
+    .filter(x => !self || x.s !== self.s)
+    .slice()
+    .sort((a, b) => a.s.localeCompare(b.s, 'es', { sensitivity: 'base' }));
+}
+
+function buildCards(filter = "") {
+  const f = filter.trim().toLowerCase();
+  grid.innerHTML = "";
+  let visibleSiglas = 0;
+
+  // Normaliza texto: minúsculas y sin acentos, para que "energia" calce con "energía".
+  const norm = (s) => (s || "").toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const fN = norm(f);
+
+  // Reduce una palabra a una raíz tolerante a singular/plural en español:
+  // quita sufijos -es / -s finales (p. ej. "residuos" -> "residuo", "electrogenos" -> "electrogeno").
+  const stem = (w) => w.replace(/(es|s)$/,'');
+  // Reduce cada palabra de un texto a su raíz, devolviendo el texto "stemmed".
+  const stemText = (t) => t.split(/[^a-z0-9]+/).filter(Boolean).map(stem).join(' ');
+
+  const fStem = stemText(fN);
+
+  // Coincide por sigla, nombre, definición, descripción o palabras clave
+  // (sinónimos/términos relacionados, directos o indirectos), tolerante a plural/singular.
+  const matchSigla = (x) => {
+    if (!f) return true;
+    const hayRaw = norm([x.s, x.full, x.def, x.desc, (x.keywords || []).join(' ')].join(' '));
+    // 1) Coincidencia directa por subcadena (frases, siglas, texto parcial).
+    if (hayRaw.includes(fN)) return true;
+    // 2) Coincidencia por raíz (singular/plural): la consulta "stemmed" dentro del texto "stemmed".
+    //    Se exige raíz de al menos 4 caracteres para evitar falsos positivos por palabras muy cortas.
+    if (fStem && fStem.length >= 4 && stemText(hayRaw).includes(fStem)) return true;
+    return false;
+  };
+
+  MINISTRIES.forEach(m => {
+    const selfObj = getSelf(m);
+    const childSiglas = getChildren(m);
+
+    const matchingChildren = childSiglas.filter(matchSigla);
+    const selfMatches = !!selfObj && matchSigla(selfObj);
+    const nameMatches = !!f && norm(m.name).includes(fN);
+
+    if (f && matchingChildren.length === 0 && !selfMatches && !nameMatches) return;
+
+    // Siglas que se muestran como resultado al buscar (incluida la rectora si calza).
+    const hits = [];
+    if (selfMatches) hits.push(selfObj);
+    matchingChildren.forEach(x => hits.push(x));
+    visibleSiglas += hits.length;
+
+    const totalEnTarjeta = childSiglas.length; // badge: cantidad de siglas (sin la rectora)
+
+    // Tarjeta como contenedor; el encabezado es el botón clickeable.
+    const card = document.createElement('div');
+    card.className = 'ministry-card';
+
+    const head = document.createElement('button');
+    head.className = 'ministry';
+    head.type = 'button';
+    head.innerHTML = `
+      <span class="m-icon" aria-hidden="true">${m.icon}</span>
+      <span class="m-meta">
+        <span class="m-name">${m.name}</span><br>
+        <span class="m-sub">${m.sub}</span>
+      </span>
+      <span class="m-badge">${totalEnTarjeta}</span>
+      <span class="m-open-ico" aria-hidden="true">▸</span>
+    `;
+    head.setAttribute('aria-label',
+      childSiglas.length > 0
+        ? `Abrir siglas de ${m.name}`
+        : `Ver definición de ${selfObj ? selfObj.s : m.name}`);
+
+    // El recuadro del ícono es un acceso directo a la definición de la sigla rectora.
+    const iconEl = head.querySelector('.m-icon');
+    if (selfObj) {
+      iconEl.classList.add('m-icon-link');
+      iconEl.setAttribute('title', `Ver definición de ${selfObj.s}`);
+    }
+
+    head.addEventListener('click', (e) => {
+      if (selfObj && e.target.closest('.m-icon')) {
+        openModal(selfObj, m);
+        return;
+      }
+      if (childSiglas.length > 0) {
+        openListModal(m);
+      } else if (selfObj) {
+        openModal(selfObj, m);
+      }
+    });
+
+    card.appendChild(head);
+
+    // Al buscar, muestra directamente las siglas que coinciden con la palabra clave.
+    if (f && hits.length > 0) {
+      const hitWrap = document.createElement('div');
+      hitWrap.className = 'card-hits';
+      hits.forEach(x => {
+        const chip = document.createElement('button');
+        chip.className = 'sigla';
+        chip.type = 'button';
+        chip.innerHTML = `${x.s}<span class="s-full">${x.full}</span>`;
+        chip.addEventListener('click', () => openModal(x, m));
+        hitWrap.appendChild(chip);
+      });
+      card.appendChild(hitWrap);
+    }
+
+    grid.appendChild(card);
+  });
+
+  noResults.style.display = (f && visibleSiglas === 0) ? 'block' : 'none';
+  countPill.textContent = f
+    ? `${visibleSiglas} coincidencia(s)`
+    : `${totalSiglas()} siglas · ${MINISTRIES.length} organismos`;
+}
+
+/* ============================================================
+   MODAL: lista de siglas de un organismo
+============================================================ */
+const listModal = document.getElementById('listModal');
+
+function openListModal(m) {
+  const selfObj = getSelf(m);
+  const children = getChildren(m);
+
+  document.getElementById('lIcon').textContent = m.icon;
+  document.getElementById('lTitle').textContent = m.name;
+  document.getElementById('lSub').textContent = m.sub;
+  document.getElementById('lIntro').textContent =
+    `Siglas asociadas a ${m.name}. Haz clic en una para ver su definición al costado.`;
+
+  // Al (re)abrir, el panel de detalle arranca cerrado.
+  listModal.classList.remove('detail-open');
+  clearActive();
+
+  // Fila de la sigla rectora: muestra su detalle en el panel lateral.
+  const selfRow = document.getElementById('lSelfRow');
+  if (selfObj) {
+    document.getElementById('lSelfTag').textContent = selfObj.s;
+    document.getElementById('lSelfFull').textContent = selfObj.full;
+    selfRow.style.display = 'flex';
+    selfRow.onclick = () => toggleDetail(selfObj, m, selfRow);
+  } else {
+    selfRow.style.display = 'none';
+    selfRow.onclick = null;
+  }
+
+  // Chips de las demás siglas.
+  const list = document.getElementById('lList');
+  list.innerHTML = "";
+  children.forEach(x => {
+    const chip = document.createElement('button');
+    chip.className = 'sigla';
+    chip.type = 'button';
+    chip.innerHTML = `${x.s}<span class="s-full">${x.full}</span>`;
+    chip.addEventListener('click', () => toggleDetail(x, m, chip));
+    list.appendChild(chip);
+  });
+
+  listOverlay.classList.add('show');
+  document.getElementById('lX').focus();
+}
+
+/* Marca visualmente la sigla seleccionada en la lista. */
+function clearActive() {
+  listModal.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+}
+function setActive(el) {
+  clearActive();
+  el.classList.add('active');
+}
+
+/* Clic en una sigla: si no está activa, abre su detalle; si ya está activa,
+   contrae el panel y vuelve la ventana a su estado inicial (solo lista). */
+function toggleDetail(x, m, el) {
+  if (el.classList.contains('active')) {
+    collapseDetail();
+  } else {
+    showDetail(x, m);
+    setActive(el);
+  }
+}
+
+/* Rellena el panel de detalle lateral y ensancha el modal. */
+function showDetail(x, m) {
+  document.getElementById('dTag').textContent = x.s;
+  document.getElementById('dFull').textContent = x.full;
+  document.getElementById('dDef').textContent = x.def;
+  document.getElementById('dDesc').textContent = x.desc;
+
+  const dSrc = document.getElementById('dSource');
+  if (x.src && x.src.u) {
+    dSrc.innerHTML = `Fuente: <a href="${x.src.u}" target="_blank" rel="noopener">${x.src.t}</a>`;
+  } else {
+    dSrc.innerHTML = `<span>Fuente: definición de uso general en gestión ambiental</span>`;
+  }
+
+  document.getElementById('lFootHint').textContent =
+    `Mostrando ${x.s}. Haz clic de nuevo en ${x.s} para contraer, o en otra sigla para cambiar.`;
+  listModal.classList.add('detail-open');
+}
+
+/* Contrae el panel lateral sin cerrar la ventana del organismo. */
+function collapseDetail() {
+  listModal.classList.remove('detail-open');
+  clearActive();
+  document.getElementById('lFootHint').textContent =
+    'Haz clic en una sigla para ver su definición al costado.';
+}
+
+function closeListModal() {
+  listOverlay.classList.remove('show');
+  listModal.classList.remove('detail-open');
+  clearActive();
+}
+
+document.getElementById('lX').addEventListener('click', closeListModal);
+document.getElementById('lCloseFoot').addEventListener('click', closeListModal);
+listOverlay.addEventListener('click', (e) => { if (e.target === listOverlay) closeListModal(); });
+
+/* ============================================================
+   MODAL: definición de una sigla
+============================================================ */
+function openModal(x, m) {
+  document.getElementById('mTag').textContent = x.s;
+  document.getElementById('mTitle').textContent = x.full;
+  document.getElementById('mOrg').textContent = m.name;
+  document.getElementById('mDef').textContent = x.def;
+  document.getElementById('mDesc').textContent = x.desc;
+
+  const srcEl = document.getElementById('mSource');
+  if (x.src && x.src.u) {
+    srcEl.innerHTML = `Fuente: <a href="${x.src.u}" target="_blank" rel="noopener">${x.src.t}</a>`;
+  } else {
+    srcEl.innerHTML = `<span>Fuente: definición de uso general en gestión ambiental</span>`;
+  }
+
+  overlay.classList.add('show');
+  document.getElementById('xBtn').focus();
+}
+
+function closeModal() { overlay.classList.remove('show'); }
+
+document.getElementById('xBtn').addEventListener('click', closeModal);
+document.getElementById('closeFoot').addEventListener('click', closeModal);
+overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeModal(); closeListModal(); }
+});
+
+/* ============================================================
+   BÚSQUEDA
+============================================================ */
+/* debounce: espera a que el usuario deje de teclear antes de recalcular,
+   para no reconstruir las tarjetas en cada pulsación (más fluido). */
+function debounce(fn, ms) {
+  let t;
+  return function () {
+    const args = arguments;
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(null, args), ms);
+  };
+}
+document.getElementById('search').addEventListener('input',
+  debounce((e) => buildCards(e.target.value), 120));
+
+/* ============================================================
+   DATOS DE NORMATIVA
+   Agrupadas por organismo que dicta la norma (mismo criterio que el glosario).
+   Cada norma: n (etiqueta corta), full (título), def (definición breve),
+   desc (descripción extendida, jurídica), driveId (fileId del PDF en Drive),
+   src (fuente oficial en LeyChile), keywords (para la búsqueda).
+
+   TEXTOS: descripciones resumidas de cada norma (validadas).
+   driveId: fileId del PDF en Drive (ya asignados). Para agregar normas nuevas,
+            obtén su fileId con verArchivosRecordados en Apps Script.
+============================================================ */
+const ORGANISMOS_NORMA = [
+  {
+    id: "mma", icon: "🌱", name: "Ministerio del Medio Ambiente",
+    sub: "Leyes y decretos ambientales dictados o liderados por el MMA",
+    normas: [
+      { n:"Ley 19.300", full:"Bases Generales del Medio Ambiente",
+        def:"Ley marco que establece la institucionalidad y los instrumentos de gestión ambiental en Chile.",
+        desc:"Define principios, instrumentos (como el Sistema de Evaluación de Impacto Ambiental) y la base normativa sobre la que se construye el resto de la regulación ambiental. Ha sido modificada por leyes posteriores, en especial la Ley 20.417. Es la referencia general en materia de responsabilidad y gestión ambiental para proyectos y actividades.",
+        driveId:"1IXd_FRyTN6uBDMeADcVGXcLAHvn3iR9Q",
+        src:{t:"LeyChile · Ley 19.300", u:"https://www.bcn.cl/leychile/navegar?idNorma=30667"},
+        keywords:["19300","bases generales","medio ambiente","seia","institucionalidad","marco ambiental","evaluacion"] },
+      { n:"Ley 20.417", full:"Crea el Ministerio, el Servicio de Evaluación Ambiental y la Superintendencia del Medio Ambiente",
+        def:"Ley que reforma la institucionalidad ambiental creando el MMA, el SEA y la SMA.",
+        desc:"Modificó la Ley 19.300 y reorganizó la institucionalidad ambiental: crea el Ministerio del Medio Ambiente, el Servicio de Evaluación Ambiental (que administra el SEIA) y la Superintendencia del Medio Ambiente (fiscalización y sanción). Es clave para entender quién hace qué en el sistema ambiental chileno.",
+        driveId:"19EaQt8_0tSB6vSRYghzK5FkpcPFzTv8F",
+        src:{t:"LeyChile · Ley 20.417", u:"https://www.bcn.cl/leychile/navegar?idNorma=1010459"},
+        keywords:["20417","ministerio","sea","sma","superintendencia","institucionalidad","fiscalizacion"] },
+      { n:"Ley 20.920", full:"Marco para la Gestión de Residuos, la REP y Fomento al Reciclaje",
+        def:"Ley REP: establece la responsabilidad extendida del productor sobre los residuos de productos prioritarios.",
+        desc:"Obliga a los productores de productos prioritarios (entre ellos aparatos eléctricos y electrónicos, pilas y baterías, relevantes para Dartel) a organizar y financiar la gestión de los residuos derivados de sus productos, mediante metas de recolección y valorización. Base de la economía circular en Chile.",
+        driveId:"1_eUv3-B-WRhKnp_-HN0EDkCij1A2PNBt",
+        src:{t:"LeyChile · Ley 20.920", u:"https://www.bcn.cl/leychile/navegar?idNorma=1090894"},
+        keywords:["20920","rep","residuos","reciclaje","productos prioritarios","economia circular","valorizacion","raee"] },
+      { n:"Ley 21.368", full:"Regula la entrega de plásticos de un solo uso y las botellas plásticas",
+        def:"Limita la entrega de productos plásticos de un solo uso y regula las botellas plásticas.",
+        desc:"Busca disminuir la generación de residuos restringiendo la entrega de productos desechables de un solo uso, especialmente en expendio de alimentos, y promoviendo botellas retornables y plástico certificado. Implementación gradual con reglamento posterior.",
+        driveId:"1WnBUZpq9TLCIp256ddT-XmiKmRXb34ia",
+        src:{t:"LeyChile · Ley 21.368", u:"https://www.bcn.cl/leychile/navegar?idNorma=1163603"},
+        keywords:["21368","plasticos","un solo uso","botellas","desechables","residuos","pusu"] },
+      { n:"Ley 21.455", full:"Ley Marco de Cambio Climático",
+        def:"Establece la gobernanza climática y la meta de carbono neutralidad al 2050.",
+        desc:"Fija obligaciones y facultades de los organismos del Estado para la acción climática, instrumentos de gestión del cambio climático y la meta de neutralidad de emisiones de gases de efecto invernadero a más tardar el 2050. Relevante para la huella de carbono y los reportes corporativos.",
+        driveId:"1ulNB76SFUh34LNp01TwdRRQevdML91X1",
+        src:{t:"LeyChile · Ley 21.455", u:"https://www.bcn.cl/leychile/navegar?idNorma=1177286"},
+        keywords:["21455","cambio climatico","carbono neutralidad","gei","clima","mitigacion","2050","huella de carbono"] },
+      { n:"DS 40/2012", full:"Reglamento del Sistema de Evaluación de Impacto Ambiental (SEIA)",
+        def:"Detalla cómo se aplica el SEIA: tipologías de ingreso, contenidos de DIA/EIA y procedimientos.",
+        desc:"Reglamento que operacionaliza el SEIA definido en la Ley 19.300: establece qué proyectos ingresan, con qué instrumento (Declaración o Estudio de Impacto Ambiental), sus contenidos y el procedimiento de evaluación que culmina en la RCA.",
+        driveId:"1QFdUmhum_5T23p09KN7YpKYNF0uuoCBL",
+        src:{t:"LeyChile · DS 40 (SEIA)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1053563"},
+        keywords:["ds40","40","seia","reglamento","dia","eia","rca","evaluacion de impacto","tipologia de ingreso"] },
+      { n:"DS 1/2013", full:"Reglamento del Registro de Emisiones y Transferencias de Contaminantes (RETC)",
+        def:"Regula el registro público de emisiones y transferencias de contaminantes.",
+        desc:"Establece el funcionamiento del RETC, donde confluyen declaraciones de emisiones al aire, agua y suelo y de transferencia de residuos. Relevante para Dartel por la declaración de fuentes fijas (grupos electrógenos) vía Ventanilla Única.",
+        driveId:"1XWOegPgpKuicJ2aCOMoSbRIOqxWHjaae",
+        src:{t:"LeyChile · DS 1 (RETC)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1050536"},
+        keywords:["ds1","retc","emisiones","contaminantes","transferencias","ventanilla unica","fuentes fijas","declaracion"] },
+      { n:"DS 8/2019", full:"Decreto que establece metas de recolección y valorización de neumáticos (REP)",
+        def:"Fija las metas de la Ley REP para el producto prioritario neumáticos.",
+        desc:"Define metas de recolección y valorización y obligaciones de los productores de neumáticos bajo el régimen de la Ley 20.920. Primer decreto de metas de productos prioritarios de la REP.",
+        driveId:"13Xp1nVts0MsCVs3pfaiwnT8BfWEhrIoi",
+        src:{t:"LeyChile · DS 8 (neumáticos)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1154847"},
+        keywords:["ds8","neumaticos","rep","metas","valorizacion","recoleccion","producto prioritario"] },
+      { n:"DS 12/2020", full:"Decreto que establece metas de recolección y valorización de envases y embalajes (REP)",
+        def:"Fija las metas de la Ley REP para el producto prioritario envases y embalajes.",
+        desc:"Define metas de recolección y valorización y obligaciones de los productores de envases y embalajes bajo la Ley 20.920. Relevante para empresas que ponen productos envasados en el mercado.",
+        driveId:"1YZEz7-PC8mS6s6Ap43cGSkLGyDruYSi_",
+        src:{t:"LeyChile · DS 12 (envases)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1157019"},
+        keywords:["ds12","envases","embalajes","rep","metas","valorizacion","recoleccion","producto prioritario"] },
+      { n:"DS 22", full:"Decreto que establece metas de recolección y valorización de aparatos eléctricos y electrónicos (RAEE) (REP)",
+        def:"Fija las metas de la Ley REP para el producto prioritario aparatos eléctricos y electrónicos.",
+        desc:"Define metas de recolección y valorización y obligaciones de los productores de aparatos eléctricos y electrónicos (cuyos residuos son los RAEE) bajo el régimen de la Ley 20.920. Es el decreto de metas más relevante para Dartel por su giro de materiales eléctricos, y se suma a los de neumáticos (DS 8) y envases y embalajes (DS 12) como productos prioritarios de la REP.",
+        driveId:"1YMmFU0SnZ8nrXHXR80vVzWfw4jMe_QWI",
+        src:{t:"LeyChile · DS 22 (RAEE)", u:"https://www.bcn.cl/leychile/navegar?idNorma=1223902"},
+        keywords:["ds22","22","raee","aparatos electricos","aparatos electronicos","electronicos","rep","metas","valorizacion","recoleccion","producto prioritario","residuos electronicos","e-waste"] }
+    ]
+  },
+  {
+    id: "minsal", icon: "🏥", name: "Ministerio de Salud",
+    sub: "Normativa sanitaria aplicable al manejo de residuos",
+    normas: [
+      { n:"DS 148/2003", full:"Reglamento Sanitario sobre Manejo de Residuos Peligrosos (RESPEL)",
+        def:"Regula el manejo de residuos peligrosos para proteger la salud y el medio ambiente.",
+        desc:"Establece las condiciones sanitarias y de seguridad para la generación, almacenamiento, transporte, tratamiento y disposición final de residuos peligrosos (tóxicos, inflamables, corrosivos, reactivos). Los generadores declaran y hacen seguimiento vía SIDREP. Relevante para Dartel por aceites, baterías y envases contaminados.",
+        driveId:"1TMVXFk1Ue7wuSrLHB2oEYk2qHk5keccV",
+        src:{t:"LeyChile · DS 148 (RESPEL)", u:"https://www.bcn.cl/leychile/navegar?idNorma=226458"},
+        keywords:["ds148","respel","residuos peligrosos","sidrep","minsal","salud","toxico","inflamable","corrosivo","aceites","baterias"] }
+    ]
+  }
+];
+
+/* ============================================================
+   RENDER NORMATIVA (replica la dinámica del glosario)
+============================================================ */
+const gridNorma = document.getElementById('gridNorma');
+const noResultsNorma = document.getElementById('noResultsNorma');
+const countPillNorma = document.getElementById('countPillNorma');
+const normaOverlay = document.getElementById('normaOverlay');
+const normaModal = document.getElementById('normaModal');
+
+function totalNormas() {
+  return ORGANISMOS_NORMA.reduce((n, o) => n + o.normas.length, 0);
+}
+
+/* Normaliza texto para búsqueda insensible a acentos/mayúsculas. */
+function normNorma(s) {
+  return (s || "").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/* Construye las tarjetas de organismos. Si un organismo no tiene normas, no se crea tarjeta. */
+function buildNormaCards(filter = "") {
+  const f = normNorma(filter);
+  gridNorma.innerHTML = "";
+  let visibles = 0, mostradas = 0;
+
+  ORGANISMOS_NORMA.forEach(org => {
+    if (!org.normas || org.normas.length === 0) return; // sin normas -> sin tarjeta
+
+    // Filtra las normas del organismo según la búsqueda.
+    const hits = org.normas.filter(x => {
+      if (!f) return true;
+      const blob = normNorma([x.n, x.full, x.def, x.desc, (x.keywords || []).join(" ")].join(" "));
+      return blob.includes(f);
+    });
+    if (hits.length === 0) return;
+
+    visibles += hits.length;
+    mostradas++;
+
+    const card = document.createElement('div');
+    card.className = 'ministry-card';
+
+    const head = document.createElement('button');
+    head.className = 'ministry';
+    head.type = 'button';
+    head.innerHTML =
+      `<span class="m-icon" aria-hidden="true">${org.icon}</span>
+       <span class="m-meta">
+         <span class="m-name">${org.name}</span>
+         <span class="m-sub">${org.sub}</span>
+       </span>
+       <span class="m-badge">${org.normas.length}</span>
+       <span class="m-open-ico" aria-hidden="true">▸</span>`;
+    head.addEventListener('click', () => openNormaModal(org));
+    card.appendChild(head);
+
+    // Si hay búsqueda activa, muestra las normas coincidentes bajo el encabezado.
+    if (f) {
+      const hitWrap = document.createElement('div');
+      hitWrap.className = 'card-hits';
+      hits.forEach(x => {
+        const chip = document.createElement('button');
+        chip.className = 'sigla';
+        chip.type = 'button';
+        chip.innerHTML = `${x.n}<span class="s-full">${x.full}</span>`;
+        chip.addEventListener('click', (e) => { e.stopPropagation(); openNormaModal(org, x); });
+        hitWrap.appendChild(chip);
+      });
+      card.appendChild(hitWrap);
+    }
+
+    gridNorma.appendChild(card);
+  });
+
+  noResultsNorma.style.display = mostradas === 0 ? 'block' : 'none';
+  countPillNorma.textContent = f
+    ? `${visibles} norma(s) encontrada(s)`
+    : `${totalNormas()} normas · ${ORGANISMOS_NORMA.filter(o => o.normas.length).length} organismos`;
+}
+
+/* Abre el modal del organismo con su lista de normas.
+   Si se pasa 'focoNorma', abre directamente el detalle de esa norma. */
+function openNormaModal(org, focoNorma) {
+  document.getElementById('nIcon').textContent = org.icon;
+  document.getElementById('nTitle').textContent = org.name;
+  document.getElementById('nSub').textContent = org.sub;
+  document.getElementById('nIntro').textContent =
+    `${org.normas.length} norma(s) de este organismo. Haz clic en una para ver su detalle.`;
+
+  normaModal.classList.remove('detail-open');
+  clearNormaActive();
+
+  const list = document.getElementById('nList');
+  list.innerHTML = "";
+  org.normas.forEach(x => {
+    const chip = document.createElement('button');
+    chip.className = 'sigla';
+    chip.type = 'button';
+    chip.innerHTML = `${x.n}<span class="s-full">${x.full}</span>`;
+    chip.addEventListener('click', () => toggleNormaDetail(x, chip));
+    chip._norma = x;
+    list.appendChild(chip);
+  });
+
+  document.getElementById('nFootHint').textContent =
+    'Haz clic en una norma para ver su detalle al costado.';
+  normaOverlay.classList.add('show');
+  document.getElementById('nX').focus();
+
+  // Apertura directa de una norma (desde los resultados de búsqueda).
+  if (focoNorma) {
+    const target = Array.from(list.children).find(c => c._norma === focoNorma);
+    if (target) toggleNormaDetail(focoNorma, target);
+  }
+}
+
+function clearNormaActive() {
+  normaModal.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+}
+
+/* Clic en una norma: si no está activa, abre su detalle; si ya estaba activa,
+   contrae el panel (misma dinámica que el glosario). */
+function toggleNormaDetail(x, el) {
+  if (el.classList.contains('active')) {
+    collapseNormaDetail();
+    return;
+  }
+  clearNormaActive();
+  el.classList.add('active');
+  showNormaDetail(x);
+}
+
+function showNormaDetail(x) {
+  document.getElementById('ndTag').textContent = x.n;
+  document.getElementById('ndFull').textContent = x.full;
+  document.getElementById('ndDef').textContent = x.def || "—";
+  document.getElementById('ndDesc').textContent = x.desc || "—";
+
+  // Documento (PDF en Drive): botón que abre el visor grande + enlace a Drive.
+  const toggle = document.getElementById('ndToggle');
+  const docLink = document.getElementById('ndDoc');
+
+  const pendiente = !x.driveId || x.driveId.indexOf("PEGAR_FILEID") === 0;
+  if (pendiente) {
+    toggle.classList.add('disabled');
+    toggle.textContent = "📄 Documento no disponible aún";
+    toggle.onclick = null;
+    docLink.classList.add('disabled');
+    docLink.removeAttribute('href');
+  } else {
+    toggle.classList.remove('disabled');
+    toggle.textContent = "📄 Ver documento";
+    docLink.classList.remove('disabled');
+    docLink.href = "https://drive.google.com/file/d/" + x.driveId + "/view";
+    toggle.onclick = function () { abrirVisorPdf(x); };
+  }
+
+  const src = document.getElementById('ndSource');
+  src.innerHTML = x.src
+    ? `<span>Fuente oficial: </span><a href="${x.src.u}" target="_blank" rel="noopener">${x.src.t}</a>`
+    : "";
+
+  document.getElementById('nFootHint').textContent =
+    `Mostrando ${x.n}. Haz clic de nuevo en ${x.n} para contraer, o en otra norma para cambiar.`;
+  normaModal.classList.add('detail-open');
+}
+
+function collapseNormaDetail() {
+  normaModal.classList.remove('detail-open');
+  clearNormaActive();
+  document.getElementById('nFootHint').textContent =
+    'Haz clic en una norma para ver su detalle al costado.';
+}
+
+function closeNormaModal() {
+  normaOverlay.classList.remove('show');
+  normaModal.classList.remove('detail-open');
+  clearNormaActive();
+}
+
+/* ============================================================
+   VISOR DE PDF GRANDE DEDICADO
+============================================================ */
+const pdfOverlay = document.getElementById('pdfOverlay');
+const pdfFrame = document.getElementById('pdfFrame');
+
+function abrirVisorPdf(x) {
+  if (!x.driveId) return;
+  document.getElementById('pdfTitle').textContent = x.n + " · " + x.full;
+  document.getElementById('pdfOpenDrive').href =
+    "https://drive.google.com/file/d/" + x.driveId + "/view";
+  pdfFrame.src = "https://drive.google.com/file/d/" + x.driveId + "/preview";
+  pdfOverlay.classList.add('show');
+}
+
+function cerrarVisorPdf() {
+  pdfOverlay.classList.remove('show');
+  pdfFrame.src = ''; // libera el PDF para que no siga cargando
+}
+
+document.getElementById('pdfX').addEventListener('click', cerrarVisorPdf);
+pdfOverlay.addEventListener('click', (e) => { if (e.target === pdfOverlay) cerrarVisorPdf(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarVisorPdf(); });
+
+document.getElementById('nX').addEventListener('click', closeNormaModal);
+document.getElementById('nCloseFoot').addEventListener('click', closeNormaModal);
+normaOverlay.addEventListener('click', (e) => { if (e.target === normaOverlay) closeNormaModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNormaModal(); });
+document.getElementById('searchNorma').addEventListener('input',
+  debounce((e) => buildNormaCards(e.target.value), 120));
+
+/* ============================================================
+   NAVEGACIÓN POR PESTAÑAS (Glosario / Normativa Ambiental)
+   Solo un panel visible a la vez. Inicia en Glosario.
+============================================================ */
+(function () {
+  const tabGlosario = document.getElementById('tabGlosario');
+  const tabNormativa = document.getElementById('tabNormativa');
+  const panelGlosario = document.getElementById('panelGlosario');
+  const panelNormativa = document.getElementById('panelNormativa');
+
+  function activar(tab, panel, otraTab, otroPanel) {
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    panel.classList.add('active');
+
+    otraTab.classList.remove('active');
+    otraTab.setAttribute('aria-selected', 'false');
+    otroPanel.classList.remove('active');
+
+    // Cierra cualquier ventana modal abierta al cambiar de sección.
+    closeModal(); closeListModal(); closeNormaModal();
+  }
+
+  // Normativa se construye solo la primera vez que se abre su pestaña (carga diferida).
+  let normativaLista = false;
+
+  tabGlosario.addEventListener('click', function () {
+    activar(tabGlosario, panelGlosario, tabNormativa, panelNormativa);
+  });
+  tabNormativa.addEventListener('click', function () {
+    if (!normativaLista) { buildNormaCards(); normativaLista = true; }
+    activar(tabNormativa, panelNormativa, tabGlosario, panelGlosario);
+  });
+})();
+
+/* Init: solo se construye la sección visible al inicio (Glosario). */
+buildCards();
+</script>
+
+  <!-- Pie de página (Bottom.jpeg) -->
+  <footer class="site-foot">
+    <img src="https://raw.githubusercontent.com/fdelafuenteb/dartelsostenibilidad/main/Logotipos%20y%20Don%20Electro/Bottom.jpeg" alt="Dartel Electricidad · La diferencia está en el servicio" />
+  </footer>
+</body>
+</html>
