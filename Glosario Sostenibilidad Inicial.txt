@@ -1,0 +1,52 @@
+Glosario Sostenibilidad (instituciones, entidades dependientes y registros/reportes)
+
+AgenciaSE: Agencia de Sostenibilidad Energética
+AP: Acuerdo de París
+APL: Acuerdo de Producción Limpia
+BNE: Balance Nacional de Energía
+ASCC: Agencia de Sustentabilidad y Cambio Climático
+CCGE: Consumidor con Capacidad de Gestión de Energía (consumo final de energía igual o superior a 50 Tcal/año por Ley 21.305)
+CMNUCC: Convención Marco de las Naciones Unidas sobre Cambio Climático
+CONAF: Corporación Nacional Forestal
+DGA: Dirección General de Aguas
+DS: Decreto Supremo
+EE: Eficiencia Energética
+ERNC: Energías Renovables No Convencionales
+FCVC: Forzantes Climáticos de Vida Corta
+GEI: Gas de Efecto Invernadero
+HdC: Huella de Carbono
+INN: Instituto Nacional de Normalización
+MINENERGIA: Ministerio de Energía
+MINMINERIA: Ministerio de Minería
+MINSAL: Ministerio de Salud
+MMA: Ministerio del Medio Ambiente
+MRV: Monitoreo, Reporte y Verificación de gases de efecto invernadero
+NCh: Norma Chilena (INN)
+NFU: Neumáticos Fuera de Uso
+ODS: Objetivos de Desarrollo Sostenible
+PNEE: Plan Nacional de Eficiencia Energética
+PNUMA: Programa de las Naciones Unidas para el Medio Ambiente
+PPDA: Plan de Prevención y/o Descontaminación Atmosférica
+RAEE: Residuos de Aparatos Eléctricos y Electrónicos
+RCA: Resolución de Calificación Ambiental
+REP: Responsabilidad Extendida del Productor
+RESPEL: Residuos Peligrosos
+RETC: Registro de Emisiones y Transferencias de Contaminantes
+RFP: Registro de Fuentes y Procesos
+RSD: Residuos Sólidos Domiciliarios
+RSDyA: Residuos Sólidos Domiciliarios y Asimilables
+RSEIA: Reglamento del Sistema de Evaluación de Impacto Ambiental
+RUEA: Registro Único de Emisiones Atmosféricas
+SEC: Superintendencia de Electricidad y Combustibles
+SEA: Servicio de Evaluación Ambiental
+SEIA: Sistema de Evaluación de Impacto Ambiental
+SEREMI: Secretaría Regional Ministerial
+SG (REP): Sistema de Gestión bajo la Ley REP
+SGA: Sistema de Gestión Ambiental (referido a la norma ISO 14001)
+SGE: Sistema de Gestión de la Energía (exigido por la Ley 21.305 a los CCGE; referido a la norma ISO 50001)
+SGI: Sistema de Gestión Integrado
+SIDREP: Sistema de Declaración y Seguimiento de Residuos Peligrosos
+SINADER: Sistema Nacional de Declaración de Residuos
+SMA: Superintendencia del Medio Ambiente
+SUSPEL: Sustancias Peligrosas
+VU: Ventanilla Única
